@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "anoEscolar": "6º Ano",
+    "disciplina": "Matemática",
+    "tema": "Frações e Números Decimais",
+    "conteudo": "Uma fração é a representação matemática de uma ou mais partes de um inteiro que foi dividido em pedaços rigorosamente iguais. Ela é composta por dois termos separados por um traço: o numerador (parte superior), que indica quantas partes foram tomadas, e o denominador (parte inferior), que mostra em quantas partes iguais o todo foi repartido.\n\nPor exemplo, se dividirmos uma barra de chocolate em 8 quadrados iguais e comermos 3, representamos essa quantidade pela fração 3/8. Além disso, toda fração corresponde a uma divisão e pode ser convertida em um número decimal dividindo-se o numerador pelo denominador. No caso de 1/2, ao dividir 1 por 2, obtemos 0,5. Compreender essa equivalência é essencial para lidar com medidas, porcentagens e valores monetários no dia a dia.",
+    "videoUrl": "https://www.youtube.com/watch?v=PL47dTfpoDE"
+  },
+  {
+    "id": 2,
+    "anoEscolar": "6º Ano",
+    "disciplina": "Ciências",
+    "tema": "Ciclo e Estados Físicos da Água",
+    "conteudo": "A água é uma substância indispensável à vida e pode ser encontrada na natureza em três estados físicos distintos: sólido, líquido e gasoso. No estado sólido (como nas geleiras e cubos de gelo), as moléculas de água estão muito próximas e organizadas, garantindo forma e volume definidos. No estado líquido (presente nos rios, oceanos e na chuva), as moléculas possuem maior liberdade de movimento, fazendo com que a água assuma o formato do recipiente que a contém.\n\nJá no estado gasoso (vapor de água invisível na atmosfera), as partículas estão bem afastadas e em constante agitação. As passagens de um estado para outro dependem diretamente da absorção ou liberação de calor: a fusão (sólido para líquido), a vaporização (líquido para gasoso), a condensação ou liquefação (gasoso para líquido) e a solidificação (líquido para sólido). Esse conjunto de transformações impulsiona o ciclo hidrológico do planeta.",
+    "videoUrl": "https://www.youtube.com/watch?v=o_mnJqHZMG0"
+  },
+  {
+    "id": 3,
+    "anoEscolar": "7º Ano",
+    "disciplina": "História",
+    "tema": "Grandes Navegações",
+    "conteudo": "As Grandes Navegações foram o conjunto de expedições marítimas empreendidas pelas potências europeias, com destaque inicial para Portugal e Espanha, ao longo dos séculos XV e XVI. O principal objetivo dessas viagens era encontrar uma rota marítima direta para as Índias, contornando o monopólio exercido pelas cidades italianas e pelos mercadores árabes sobre o comércio de especiarias (como pimenta, cravo e canela) e artigos de luxo no Mar Mediterrâneo.\n\nAlém dos interesses econômicos e da busca por metais preciosos (ouro e prata) dentro da lógica mercantilista, a expansão marítima também foi motivada pelo desejo da Igreja Católica de expandir a fé cristã para novos territórios. O pioneirismo português, favorecido pela posição geográfica e pelo desenvolvimento de instrumentos como a bússola, o astrolábio e as caravelas, culminou na chegada de Vasco da Gama às Índias (1498) e de Pedro Álvares Cabral ao Brasil (1500), enquanto os espanhóis alcançaram o continente americano em 1492 com Cristóvão Colombo.",
+    "videoUrl": "https://www.youtube.com/watch?v=rhPN6ElWXUI"
+  },
+  {
+    "id": 4,
+    "anoEscolar": "7º Ano",
+    "disciplina": "Geografia",
+    "tema": "Tipos de Vegetação e Biomas Brasileiros",
+    "conteudo": "Um bioma é um grande conjunto de ecossistemas que compartilham características semelhantes de clima, relevo, tipo de solo, vegetação e fauna. Devido à sua vasta extensão territorial e variedade climática, o Brasil abriga seis grandes biomas continentais: Amazônia, Cerrado, Mata Atlântica, Caatinga, Pampa e Pantanal.\n\nA Amazônia é a maior floresta tropical do mundo, marcada pelo clima equatorial úmido e imensa biodiversidade. O Cerrado, localizado predominantemente no Planalto Central, funciona como o 'berço das águas' do país e possui árvores de troncos retorcidos adaptadas ao clima tropical sazonal. A Caatinga é um bioma exclusivamente brasileiro, adaptado ao clima semiárido com plantas xerófitas como os cactos. Já a Mata Atlântica, embora muito reduzida pelo desmatamento histórico, concentra altíssimo índice de espécies endêmicas. Por fim, o Pampa destaca-se pelos campos sulinos, e o Pantanal é a maior planície inundável do planeta.",
+    "videoUrl": "https://www.youtube.com/watch?v=um1FD_6fAUs"
+  },
+  {
+    "id": 5,
+    "anoEscolar": "8º Ano",
+    "disciplina": "Língua Portuguesa",
+    "tema": "Figuras de Linguagem",
+    "conteudo": "As figuras de linguagem são recursos estilísticos utilizados pelos falantes e escritores para atribuir maior expressividade, ênfase ou beleza estética a um texto, explorando o sentido conotativo (figurado) das palavras em oposição ao sentido denotativo (literal).\n\nElas dividem-se em figuras de palavras, de pensamento, de sintaxe e de som. Entre as mais recorrentes estão: a metáfora, que estabelece uma comparação implícita sem o uso de conectivos comparativos ('Seus olhos são duas jabuticabas'); a hipérbole, caracterizada pelo exagero intencional ('Chorei um rio de lágrimas'); a personificação ou prosopopeia, que atribui ações ou sentimentos humanos a seres inanimados ('O vento sussurrava segredos na janela'); e a ironia, que consiste em afirmar o contrário do que realmente se pensa, geralmente com tom crítico ou humorístico.",
+    "videoUrl": "https://www.youtube.com/watch?v=of7rytLAHJ4"
+  },
+  {
+    "id": 6,
+    "anoEscolar": "8º Ano",
+    "disciplina": "Matemática",
+    "tema": "Equações do 1º Grau",
+    "conteudo": "Uma equação do 1º grau com uma incógnita é toda sentença matemática aberta que expressa uma relação de igualdade e pode ser reduzida à forma geral ax + b = 0, onde 'a' e 'b' são números reais conhecidos (coeficientes), com 'a' obrigatoriamente diferente de zero, e 'x' representa o valor desconhecido (incógnita).\n\nPodemos imaginar uma equação como uma balança de dois pratos em perfeito equilíbrio: qualquer operação realizada em um dos lados da igualdade deve ser feita igualmente no outro lado para manter o equilíbrio. Para resolver a equação 3x - 6 = 9, por exemplo, isolamos o termo com a incógnita somando 6 em ambos os membros (3x = 15) e, em seguida, dividimos os dois lados por 3, encontrando a raiz x = 5. Esse modelo matemático é a base para resolver problemas cotidianos de finanças, proporções e cálculos de medidas.",
+    "videoUrl": "https://www.youtube.com/watch?v=f4aCyUZ-hfw"
+  },
+  {
+    "id": 7,
+    "anoEscolar": "9º Ano",
+    "disciplina": "Ciências",
+    "tema": "Tabela Periódica e Estrutura Atômica",
+    "conteudo": "Toda a matéria existente no universo é constituída por unidades fundamentais chamadas átomos. Na estrutura atômica atual, o átomo é dividido em duas regiões principais: o núcleo, extremamente pequeno e denso, onde ficam os prótons (partículas de carga elétrica positiva) e os nêutrons (partículas sem carga elétrica); e a eletrosfera, região ao redor do núcleo onde orbitam os elétrons (partículas de carga negativa e massa desprezível).\n\nPara organizar os 118 elementos químicos conhecidos, utiliza-se a Tabela Periódica moderna, proposta inicialmente por Dmitri Mendeleev e atualizada por Henry Moseley. Nela, os elementos são dispostos em ordem crescente de número atômico (quantidade de prótons no núcleo). As linhas horizontais são chamadas de períodos (indicam o número de camadas eletrônicas do átomo) e as colunas verticais formam as famílias ou grupos, reunindo elementos com propriedades físicas e químicas muito semelhantes.",
+    "videoUrl": "https://www.youtube.com/watch?v=b1F3vPdkJso"
+  },
+  {
+    "id": 8,
+    "anoEscolar": "9º Ano",
+    "disciplina": "História",
+    "tema": "Segunda Guerra Mundial",
+    "conteudo": "A Segunda Guerra Mundial (1939–1945) foi o maior e mais letal conflito armado da história da humanidade, envolvendo nações de todos os continentes divididas em dois grandes blocos: os Aliados (liderados por Reino Unido, União Soviética, Estados Unidos e França) e o Eixo (formado por Alemanha, Itália e Japão).\n\nO conflito teve como antecedentes a crise econômica de 1929, o revanchismo alemão após o Tratado de Versalhes e a ascensão de regimes totalitários, como o nazismo de Adolf Hitler e o fascismo de Benito Mussolini. O estopim ocorreu em 1º de setembro de 1939, com a invasão da Polônia pela Alemanha. Ao longo de seis anos, o mundo testemunhou batalhas decisivas como Stalingrado, o Dia D na Normandia, o genocídio de milhões de pessoas no Holocausto e o lançamento das bombas atômicas sobre Hiroshima e Nagasaki. Com o fim da guerra, surgiu a Organização das Nações Unidas (ONU) e iniciou-se a polarização geopolítica da Guerra Fria.",
+    "videoUrl": "https://www.youtube.com/watch?v=q9m62sVCOYY"
+  },
+  {
+    "id": 9,
+    "anoEscolar": "1º Ano EM",
+    "disciplina": "Física",
+    "tema": "Leis de Newton",
+    "conteudo": "Publicadas por Isaac Newton em 1687 na obra 'Principia', as três Leis do Movimento constituem a base da Dinâmica e explicam a relação entre as forças que atuam sobre um corpo e a alteração em seu estado de movimento.\n\nA Primeira Lei (Princípio da Inércia) determina que todo corpo tende a permanecer em repouso ou em movimento retilíneo uniforme (velocidade constante), a menos que uma força resultante não nula atue sobre ele. A Segunda Lei (Princípio Fundamental da Dinâmica) estabelece que a aceleração adquirida por um corpo é diretamente proporcional à força resultante aplicada e inversamente proporcional à sua massa, expressa pela equação F = m · a. Por fim, a Terceira Lei (Princípio da Ação e Reação) afirma que, sempre que um corpo A exerce uma força sobre um corpo B, este reage exercendo sobre A uma força de mesma intensidade, mesma direção e sentido oposto.",
+    "videoUrl": "https://www.youtube.com/watch?v=3hNTYkdFJUI"
+  },
+  {
+    "id": 10,
+    "anoEscolar": "1º Ano EM",
+    "disciplina": "Biologia",
+    "tema": "Citologia e Organelas Celulares",
+    "conteudo": "De acordo com a Teoria Celular, todos os seres vivos são formados por células, que constituem a menor unidade morfológica e funcional da vida. As células podem ser classificadas em procariontes (mais simples, sem núcleo organizado, como as bactérias) e eucariontes (mais complexas, com material genético protegido por uma membrana nuclear, presentes em animais, plantas, fungos e protozoários).\n\nNo interior do citoplasma das células eucariontes encontram-se diversas organelas membranosas que desempenham funções vitais integradas: as mitocôndrias realizam a respiração celular para gerar energia na forma de ATP; os ribossomos sintetizam proteínas; o retículo endoplasmático rugoso e liso atuam no transporte de substâncias e na produção de lipídios; o complexo golgiense modifica, empacota e secreta moléculas; e os lisossomos promovem a digestão intracelular.",
+    "videoUrl": "https://www.youtube.com/watch?v=qbRrd22JcEM"
+  },
+  {
+    "id": 11,
+    "anoEscolar": "2º Ano EM",
+    "disciplina": "Química",
+    "tema": "Termoquímica: Reações Endotérmicas e Exotérmicas",
+    "conteudo": "A Termoquímica é o ramo da Físico-Química dedicado ao estudo das quantidades de calor liberadas ou absorvidas durante as reações químicas e as mudanças de estado físico. Essa energia térmica trocada sob pressão constante é medida por uma grandeza chamada variação de entalpia (ΔH), calculada pela diferença entre a entalpia dos produtos e a entalpia dos reagentes (ΔH = H_produtos - H_reagentes).\n\nQuando uma transformação libera calor para a vizinhança — como ocorre na combustão da madeira, na queima de combustíveis fósseis ou na respiração —, ela é classificada como exotérmica, apresentando entalpia dos produtos menor que a dos reagentes (ΔH < 0). Em contrapartida, quando o processo absorve calor do ambiente para ocorrer — como na fotossíntese, no cozimento dos alimentos ou na fusão do gelo —, trata-se de um fenômeno endotérmico, caracterizado por uma variação de entalpia positiva (ΔH > 0).",
+    "videoUrl": "https://www.youtube.com/watch?v=ll1_DzZSFBM"
+  },
+  {
+    "id": 12,
+    "anoEscolar": "3º Ano EM",
+    "disciplina": "História",
+    "tema": "Iluminismo",
+    "conteudo": "O Iluminismo, também conhecido como o 'Século das Luzes', foi um movimento filosófico, intelectual e político predominante na Europa durante o século XVIII. Os pensadores iluministas defendiam o uso autônomo da razão humana, o método científico e o progresso técnico como instrumentos capazes de combater a ignorância, o fanatismo religioso e os privilégios estamentais do Antigo Regime.\n\nNo campo político, destacaram-se os filósofos contratualistas, que buscaram explicar a origem do Estado e a legitimidade do poder por meio de um acordo racional entre os indivíduos (o contrato social). John Locke defendeu que todo ser humano possui direitos naturais inalienáveis — vida, liberdade e propriedade — e que o governo existe apenas para garanti-los. Montesquieu propôs a tripartição dos poderes (Executivo, Legislativo e Judiciário) para evitar a tirania, enquanto Jean-Jacques Rousseau enfatizou a soberania popular e a 'vontade geral' como fundamentos da democracia moderna.",
+    "videoUrl": "https://www.youtube.com/watch?v=Vklf5z6_TGM"
+  }
+]
