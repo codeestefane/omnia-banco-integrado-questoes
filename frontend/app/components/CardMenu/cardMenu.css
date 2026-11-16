@@ -1,0 +1,44 @@
+div.card-material {
+    margin-top: 80px;
+    margin-bottom: 20px;
+    max-width: 25%;
+    min-width: 25%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+    border: 1px solid #000;
+    transition: all .5s ease-in-out;
+    margin-right: 5%;
+    background-color: #aeebc1;
+}
+
+div.card-material:hover {
+    scale: calc(1.05);
+    cursor: pointer;
+}
+
+div.card-material img {
+    width: 100%;
+    margin-bottom: 0;
+    border-radius: 30px 30px 0 0;
+}
+
+div.material-descricao {
+    padding: 20px;
+    background-color: #EDEDED;
+    margin-top: 0;
+    border-radius: 0 0 30px 30px;
+    border-top: 1px solid black;
+    min-height: 110px;
+    max-height: 110px;
+}
+
+div.material-descricao h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+div.material-descricao p {
+    font-size: 14px;
+}

@@ -1,0 +1,91 @@
+.questionario {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 24px;
+}
+
+.faixa {
+    background-color: #97BCFB;
+    text-align: center;
+    font-size: 15px;
+    padding: 18px;
+    border-radius: 12px;
+}
+
+.bloco-questao {
+    display: flex;
+    flex-direction: column;
+}
+
+.questao {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+.questao p {
+    margin-bottom: 10px;
+}
+
+.alternativas {
+    display: flex;
+    flex-direction: column;
+}
+
+.alternativa {
+    margin: 0;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.alternativa input {
+    width: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.alternativa.correta { 
+    background-color: #D0FFD0; 
+}
+.alternativa.errada { 
+    background-color: #FFD0D0; 
+}
+
+.feedback {
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+div.feedback p {
+    margin: 0;
+    padding: 0;
+}
+
+.acerto { 
+    background-color: #BFF2CC; 
+}
+
+.erro { 
+    background-color: #EEC0CC; 
+}
+
+.questionario button {
+    width: 40%;
+}
+
+.acoes {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}

@@ -1,0 +1,31 @@
+.painel {
+    max-width: 900px;
+    margin: 220px auto 100px auto;
+    border: 1px solid #000;
+    border-radius: 20px;
+    background-color: #F8FFF9;
+}
+
+.corpo {
+    padding: 56px 64px;
+}
+
+.questao {
+    margin-bottom: 32px;
+    line-height: 1.5;
+}
+
+.alternativas {
+    list-style: none;
+    margin: 4px 0 0 20px;
+}
+
+.acao {
+    display: flex;
+    justify-content: center;
+    margin-top: 56px;
+}
+
+.corpo p {
+    margin-bottom: 10px;
+}

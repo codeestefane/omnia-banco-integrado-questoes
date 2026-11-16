@@ -1,0 +1,13 @@
+div form.form-simulado {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    gap: 70px;
+}
+
+.simulado-erro {
+    font-weight: 700;
+}
