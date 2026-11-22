@@ -7,17 +7,10 @@ import { toast, ToastContainer } from 'react-toastify';
 // import Navbar from '../../components/Navbar/navbar'
 import Select from '../../components/Forms/Select/select'
 import CardMenu from '../../components/CardMenu/cardMenu'
-// import provasJson from '../../data/provas.json'
-import { Prova, ProvaResumo } from '../../types'
+import { ProvaResumo } from '../../types'
 import { listarProvasEnem } from '@/app/services/api'   
 
 import { capasBancas, capaPadrao } from '../../utils/capasBancas'
-
-// const provas = provasJson as Prova[];
-
-// const bancas = [...new Set(provas.map((p) => p.banca))];
-// const anos = [...new Set(provas.map((p) => p.ano))];
-// const areas = [...new Set(provas.map((p) => p.area))];
 
 export default function MenuProvasAntigas(){
     const router = useRouter(); 

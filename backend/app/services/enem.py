@@ -1,4 +1,5 @@
 import re
+import random
 from functools import lru_cache
 
 import httpx
@@ -41,7 +42,7 @@ def listar_anos() -> list[int]:
     return sorted({int(e["year"]) for e in _exames() if "year" in e}, reverse=True)
 
 def _idioma(ano: int) -> str | None:
-    # prefere inglês; senão o primeiro idioma disponível; senão nenhum
+    # inglês -> primeiro idioma disponível -> nenhum
     for exame in _exames():
         if exame.get("year") == ano:
             idiomas = [i["value"] for i in exame.get("languages", [])]
@@ -79,7 +80,7 @@ def _limpar(texto: str | None) -> str:
     return texto.strip()
 
 def _converter(q: dict, ano: int, slug: str) -> dict | None:
-    # ignora questões que dependem de imagem (o site exibe só texto)
+    # ignora questões que dependem de imagem 
     if q.get("files"):
         return None
 
@@ -136,6 +137,36 @@ def buscar_prova_enem(ano: int, slug: str) -> dict:
         "id": f"enem-{ano}-{slug}",
         "banca": "ENEM",
         "ano": str(ano),
+        "area": AREAS[slug],
+        "questoes": questoes,
+    }
+
+def gerar_simulado_enem(slug: str, quantidade: int) -> dict:
+    if slug not in AREAS:
+        raise ProvaNaoEncontrada("Área inválida.")
+
+    anos = listar_anos()[:]
+    sorteados = random.sample(anos, k=min(2, len(anos)))
+
+    banco = []
+    for ano in sorteados:
+        for q in _baixar_questoes(ano):
+            if q.get("discipline") != slug:
+                continue
+            convertida = _converter(q, ano, slug)
+            if convertida:
+                banco.append(convertida)
+
+    if not banco:
+        raise ProvaNaoEncontrada(f"Nenhuma questão disponível para {AREAS[slug]}.")
+
+    escolhidas = random.sample(banco, k=min(quantidade, len(banco)))
+    questoes = [{**q, "numero": i} for i, q in enumerate(escolhidas, start=1)]
+
+    return {
+        "id": f"simulado-enem-{slug}",
+        "banca": "ENEM",
+        "ano": "- Simulado",
         "area": AREAS[slug],
         "questoes": questoes,
     }

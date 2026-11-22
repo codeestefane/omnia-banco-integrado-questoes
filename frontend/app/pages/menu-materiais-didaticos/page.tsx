@@ -10,7 +10,7 @@ import CardMenu from '../../components/CardMenu/cardMenu'
 import imgPadrao from '../../img/disciplinas/ciencias.png'
 import { capasDisciplinas } from '@/app/utils/capasDisciplinas'
 import { MaterialDidatico } from '@/app/types'
-import { buscarUsuarioAtual, listarMateriais } from '@/app/services/api';
+import { listarMateriais } from '@/app/services/api';
 
 export default function MenuMateriaisDidaticos(){ 
     const [materiais, setMateriais] = useState<MaterialDidatico[]>([]);

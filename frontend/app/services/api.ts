@@ -185,3 +185,19 @@ export async function buscarProvaEnem(id: string): Promise<Prova | null> {
 
   return response.json();
 }
+
+export async function gerarSimuladoEnem(area: string, quantidade: number): Promise<Prova> {
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}/provas/enem/simulado?area=${area}&quantidade=${quantidade}`);
+  } catch {
+    throw new Error("Não foi possível conectar ao servidor. Tente novamente em instantes.");
+  }
+
+  if (!response.ok) {
+    const erro = await response.json().catch(() => null);
+    throw new Error(typeof erro?.detail === "string" ? erro.detail : "Erro ao gerar o simulado.");
+  }
+
+  return response.json();
+}
