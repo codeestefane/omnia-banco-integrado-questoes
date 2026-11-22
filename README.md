@@ -14,7 +14,7 @@ O Omnia é uma plataforma educacional para consulta de materiais didáticos, pro
 - disponibiliza provas e simulados em dados locais do frontend;
 - gera questões de múltipla escolha a partir de um material escolhido;
 - oferece cadastro, autenticação por token JWT e consulta do usuário autenticado;
-- mantém os dados persistidos no backend em arquivos JSON.
+- mantém os materiais e os usuários em arquivos JSON no backend.
 
 ## Por que o projeto é útil
 
@@ -74,7 +74,7 @@ Arquivos principais:
 
 ### Frontend
 
-A interface foi construída com Next.js, React e TypeScript. Os conteúdos de provas e simulados estão em arquivos locais dentro de [frontend/app/data](frontend/app/data).
+A interface foi construída com Next.js, React e TypeScript. Os materiais didáticos são carregados pela API, enquanto provas e simulados usam dados locais em [frontend/app/data](frontend/app/data).
 
 Páginas principais:
 
@@ -117,9 +117,20 @@ Edite `backend/.env` e defina pelo menos:
 GEMINI_API_KEY=sua_chave_aqui
 GEMINI_MODEL=gemini-3.8-flash
 CORS_ORIGINS=http://localhost:3000
+```
+
+Para executar o frontend também a partir de um endereço publicado, adicione esse endereço a `CORS_ORIGINS`, separando vários valores por vírgula:
+
+```env
+CORS_ORIGINS=http://localhost:3000,https://seu-endereco.onrender.com
+```
+
+Após configurar a URL do frontend no CORS, informe as demais variáveis obrigatórias:
+
+```env
 SECRET_KEY=uma_chave_longa_e_secreta
 ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
+ACCESS_TOKEN_EXPIRE_MINUTES=60
 ```
 
 Inicie a API:
@@ -145,11 +156,13 @@ npm run dev
 
 A aplicação ficará disponível em `http://localhost:3000`.
 
-Por padrão, [frontend/app/services/api.ts](frontend/app/services/api.ts) aponta para a API hospedada no Render. Para usar a API local durante o desenvolvimento, altere o valor de `API_URL` para:
+Por padrão, [frontend/app/services/api.ts](frontend/app/services/api.ts) aponta para a API publicada no Render:
 
 ```typescript
-const API_URL = "http://localhost:8000";
+const API_URL = "https://omnia-api-2ihz.onrender.com";
 ```
+
+Para usar uma API local, substitua esse valor por `http://127.0.0.1:8000`. Quando houver deploy do frontend em outro endereço, inclua esse endereço em `CORS_ORIGINS` no backend.
 
 ## Exemplos de uso
 

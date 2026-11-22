@@ -85,7 +85,7 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
     return (
         <Suspense fallback={null}>
             <div className="painel materiais">
-                {carregando ? (<p>Material carregando...</p>) : !material ? notFound() :
+                {carregando ? (<p className="vazio">Material carregando...</p>) : !material ? notFound() :
                 (
                 <>
                 <HeaderConteudo imagem = {capasDisciplinas.get(material.disciplina) ?? imgPadrao} titulo={material.tema} subtitulo={`${material.disciplina} - ${material.anoEscolar}`} onFechar = {onFechar}/>

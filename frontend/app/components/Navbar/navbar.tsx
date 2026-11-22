@@ -8,6 +8,8 @@ import iconeQuestoes from '../../img/navegacao/icone_questoes.png';
 import iconeProvasSimulados from '../../img/navegacao/icone_provas_simulados.png';
 import iconeExit from '../../img/navegacao/exit.png';
 import logoOmnia from '../../img/navegacao/logo_omnia.png';
+import { useEffect } from 'react';
+import { buscarUsuarioAtual } from '@/app/services/api';
 
 const navItems = [
     {nome: 'Materiais didáticos', href: '/pages/menu-materiais-didaticos', img: iconeMateriais, page: 'materiais'},
