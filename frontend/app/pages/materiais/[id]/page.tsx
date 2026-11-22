@@ -5,29 +5,34 @@ import { Suspense } from "react";
 import { use, useState, useEffect} from "react";
 
 import HeaderConteudo from "@/app/components/HeaderConteudo/header";
-import { MaterialDidatico } from "../../../types";
+import { MaterialDidatico, QuestaoIA } from "../../../types";
 import Select from '../../../components/Forms/Select/select'
 import Input from "@/app/components/Forms/Input/input";
 import Button from '../../../components/Button/button'
 import Questionario from "@/app/components/Questionario/questionario";
 
 import { capasDisciplinas } from "@/app/utils/capasDisciplinas";
-import imgPadrao from '../../../img/disciplinas/ciencias.png'
+// import imgPadrao from '../../../img/disciplinas/ciencias.png';
+import imgPadrao from "@/app/img/disciplinas/ciencias.png";
 
-import { QuestaoIA, QuestionarioIA, NiveisQuestionarioIA } from "../../../types";
+// import { QuestaoIA, QuestionarioIA, NiveisQuestionarioIA } from "../../../types";
 
-import questoesMateriaisDidaticos from "../../../data/questoesMateriaisDidaticos.json"
+// import questoesMateriaisDidaticos from "../../../data/questoesMateriaisDidaticos.json"
 
-import { buscarMaterialID } from "@/app/services/api";
+import { buscarMaterialID, gerarQuestoes, SessaoExpiradaErro } from "@/app/services/api";
 
 import '../index.css'
 import { toast } from "react-toastify";
 
-const questoesMateriais = questoesMateriaisDidaticos as QuestionarioIA[];
+const NIVEIS = { facil: "Fácil", medio: "Médio", dificil: "Difícil" } as const;
+type Nivel = keyof typeof NIVEIS;
+
+// const questoesMateriais = questoesMateriaisDidaticos as QuestionarioIA[];
 
 export default function MaterialPage({params} : {params: Promise<{id: string}>}){
     const [material, setMaterial] = useState<MaterialDidatico | null>();
     const [carregando, setCarregando] = useState(true);
+    const [gerando, setGerando] = useState(false);
 
     const {id} = use(params);
     const [conteudo, setConteudo] = useState(0);
@@ -43,8 +48,8 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
                     const dado = await buscarMaterialID(Number(id));
                     setMaterial(dado ? dado : null);
                     console.log(material);
-                } catch (error: any) {
-                    toast.error(error.message || `Erro ao carregar material com identificador ${id}!`);
+                } catch (error: unknown) {
+                    toast.error((error as Error).message || `Erro ao carregar material com identificador ${id}!`);
                     setMaterial(null);
                 } finally {
                     setCarregando(false);
@@ -54,19 +59,46 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
             carregarMaterial();
         }, []);
 
-    const handleGerarQuestoes = (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleGerarQuestoes = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        setConteudo(conteudo + 1);
+        if(!nivel){
+            toast.warning("Selecione o nível da dificuldade");
+            return;
+        }
 
-        const questionario = questoesMateriais.find((q) => String(q.id) === id);
+        setGerando(true);
 
-        if (!questionario) notFound();
+        try{
+            const resultado = await gerarQuestoes(
+                Number(id),
+                NIVEIS[nivel as Nivel],
+                Number(qtdQuestoes)
+            );
+            setQuestoes(resultado);
+            setNivel('');
+            setQtdQuestoes('');
+            setConteudo(2);
+        } catch (error: unknown){
+            if (error instanceof SessaoExpiradaErro) {
+                router.push('/pages/login');
+                return;
+            }
+            toast.error((error as Error).message || "Erro ao gerar questões!");
+        } finally {
+            setGerando(false);
+        }
 
-        setQuestoes(questionario.questoes[nivel as keyof NiveisQuestionarioIA].slice(0, Number(qtdQuestoes)));
+        // setConteudo(conteudo + 1);
 
-        setNivel('');
-        setQtdQuestoes('');
+        // const questionario = questoesMateriais.find((q) => String(q.id) === id);
+
+        // if (!questionario) notFound();
+
+        // setQuestoes(questionario.questoes[nivel as keyof NiveisQuestionarioIA].slice(0, Number(qtdQuestoes)));
+
+        // setNivel('');
+        // setQtdQuestoes('');
     }
 
     const handleConteudo = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -115,7 +147,12 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
                         <form onSubmit={(e) => handleGerarQuestoes(e)}>
                             <Select nome="nivel" conteudo="Selecione nível de dificuldade" opcoes={['facil', 'medio', 'dificil']} onChange={setNivel} value={nivel}></Select>
                             <Input type="number" min="1" max="3" label="Selecione a quantidade de questões:" onChange = {(e) => setQtdQuestoes(e.target.value)} value={qtdQuestoes} placeholder='Digite...'></Input>
-                            <Button type="submit">Gerar questões</Button>
+                            <Button type="submit" disabled={gerando}>
+                                {gerando ? 'Gerando questões...' : 'Gerar questões'}
+                            </Button>
+                            {gerando && (
+                                <p><b>A IA está gerando suas questões, isso pode levar alguns segundos...</b></p>
+                            )}
                         </form>
                     </>)}
 

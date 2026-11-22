@@ -1,8 +1,20 @@
-import { MaterialDidatico } from "../types";
+import { MaterialDidatico, QuestaoIA } from "../types";
 
-const API_URL = "https://omnia-api-2ihz.onrender.com/docs";
+// const API_URL = "https://omnia-api-2ihz.onrender.com/docs";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 let cacheMateriais: MaterialDidatico[] | null = null;
+
+export class SessaoExpiradaErro extends Error {
+  constructor() {
+    super("Sua sessão expirou. Faça login novamente.");
+  }
+}
+
+function authHeaders(): HeadersInit {
+  const token = localStorage.getItem("access_token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 export async function cadastrarUsuario(dados: {
   username: string;
@@ -92,4 +104,32 @@ export async function buscarMaterialID(id: number){
   }
 
   return response.json();
+}
+
+export async function gerarQuestoes(
+  material_id: number, 
+  dificuldade: "Fácil" | "Médio" | "Difícil", 
+  quantidade: number
+) : Promise<QuestaoIA[]> {
+  const response = await fetch(`${API_URL}/questoes?material_id=${material_id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+    },
+    body: JSON.stringify({ dificuldade, quantidade}),
+  });
+
+  if(response.status === 401){
+    localStorage.removeItem("access_token");
+    throw new SessaoExpiradaErro();
+  }
+
+  if(!response.ok){
+    const erro = await response.json().catch(() => null);
+    throw new Error(erro?.detail || "Erro ao gerar questões. Tente novamente!");
+  }
+
+  return response.json();
+  
 }

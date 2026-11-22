@@ -33,5 +33,12 @@
         "full_name": "João Silva",
         "disabled": false,
         "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$pEfQdf6H2q7k2e0XO0v1dA$VQr4ICi4BowAHKIndGLZleOg2AdiZTK/v1wTCqnn3UE"
+    },
+    {
+        "username": "kauanesv",
+        "email": "kauanevieira@alunos.utfpr.edu.br",
+        "full_name": "Kauane dos Santos Vieira",
+        "disabled": false,
+        "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$sypArsYhY0ThiU/Xi+ZrUA$c34eLyrtKaRTYlAwfMYvBB0Hjw1Lp3K+ISEcxAxhAqo"
     }
 ]

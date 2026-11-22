@@ -49,7 +49,7 @@ def gerar_questoes(material: Material, dificuldade: Dificuldade, quantidade: int
         print("Enviando pedido para o Gemini...")
         cliente = genai.Client(api_key=configuracao.gemini_api_key)
         resposta = cliente.models.generate_content(
-            model="gemini-3.8-flash", # configuracao.gemini_model
+            model=configuracao.gemini_model, # configuracao.gemini_model
             contents=montar_prompt(material, dificuldade, quantidade),
             config=types.GenerateContentConfig(
                 response_mime_type="application/json", # tipo da saida
