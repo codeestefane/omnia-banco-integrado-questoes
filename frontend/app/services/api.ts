@@ -1,8 +1,6 @@
-import { MaterialDidatico, QuestaoIA } from "../types";
+import { MaterialDidatico, QuestaoIA, Prova, ProvaResumo } from "../types";
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://omnia-api-2ihz.onrender.com").replace(/\/$/, "");
-
-// let cacheMateriais: MaterialDidatico[] | null = null;
+const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000").replace(/\/$/, "");
 
 export class SessaoExpiradaErro extends Error {
   constructor() {
@@ -153,4 +151,31 @@ export async function gerarQuestoes(
 
   return response.json();
   
+}
+
+export async function listarProvasEnem(): Promise<ProvaResumo[]> {
+  const response = await fetch(`${API_URL}/provas/enem`);
+
+  if (!response.ok) {
+    const erro = await response.json().catch(() => null);
+    throw new Error(erro?.detail || "Erro ao carregar provas do ENEM.");
+  }
+
+  return response.json();
+}
+
+export async function buscarProvaEnem(id: string): Promise<Prova | null> {
+  const partes = id.match(/^enem-(\d{4})-(.+)$/);
+  if (!partes) return null;
+
+  const [, ano, area] = partes;
+  const response = await fetch(`${API_URL}/provas/enem/${ano}/${area}`);
+
+  if (response.status === 404) return null;
+  if (!response.ok) {
+    const erro = await response.json().catch(() => null);
+    throw new Error(erro?.detail || "Erro ao carregar a prova.");
+  }
+
+  return response.json();
 }

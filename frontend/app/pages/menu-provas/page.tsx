@@ -1,29 +1,51 @@
-//renomear para menu-provas
-
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { toast, ToastContainer } from 'react-toastify';
 
-import Navbar from '../../components/Navbar/navbar'
+// import Navbar from '../../components/Navbar/navbar'
 import Select from '../../components/Forms/Select/select'
 import CardMenu from '../../components/CardMenu/cardMenu'
-import provasJson from '../../data/provas.json'
-import { Prova } from '../../types'
+// import provasJson from '../../data/provas.json'
+import { Prova, ProvaResumo } from '../../types'
+import { listarProvasEnem } from '@/app/services/api'   
 
 import { capasBancas, capaPadrao } from '../../utils/capasBancas'
 
-const provas = provasJson as Prova[];
+// const provas = provasJson as Prova[];
 
-const bancas = [...new Set(provas.map((p) => p.banca))];
-const anos = [...new Set(provas.map((p) => p.ano))];
-const areas = [...new Set(provas.map((p) => p.area))];
+// const bancas = [...new Set(provas.map((p) => p.banca))];
+// const anos = [...new Set(provas.map((p) => p.ano))];
+// const areas = [...new Set(provas.map((p) => p.area))];
 
 export default function MenuProvasAntigas(){
     const router = useRouter(); 
+    const [provasEnem, setProvasEnem] = useState<ProvaResumo[]>([]);
+    const [carregando, setCarregando] = useState(true);
+
     const [banca, setBanca] = useState("");
     const [ano, setAno] = useState("");
     const [area, setArea] = useState("");
+
+    useEffect(() => {
+        async function carregar() {
+            try {
+                setProvasEnem(await listarProvasEnem());
+            } catch (error: unknown) {
+                toast.error((error as Error).message || "Erro ao carregar provas do ENEM.");
+            } finally {
+                setCarregando(false);
+            }
+        }
+        carregar();
+    }, []);
+
+    const provas: ProvaResumo[] = [...provasEnem];
+
+    const bancas = [...new Set(provas.map((p) => p.banca))];
+    const anos = [...new Set(provas.map((p) => p.ano))];
+    const areas = [...new Set(provas.map((p) => p.area))];
 
     const filtradas = provas.filter((p) =>
         (!banca || banca === "Todos" || p.banca === banca) && (!ano || ano === "Todos" || p.ano === ano) && (!area || area === "Todos" || p.area === area)
@@ -37,7 +59,9 @@ export default function MenuProvasAntigas(){
                 <Select nome="tema" conteudo="Selecione a area" opcoes={["Todos", ...areas]} onChange={setArea} value={area}></Select>
             </form>
 
-            {filtradas.length === 0 ? (
+            {carregando ? (
+                <p className="vazio">Carregando provas...</p>
+            ) : filtradas.length === 0 ? (
                 <p className="vazio">Nenhuma prova encontrada para esses filtros!</p>
             ) : (
                 <section className="card-provas">
@@ -53,5 +77,6 @@ export default function MenuProvasAntigas(){
                 </section>
             )}
         </div>
+        <ToastContainer position="top-center"/>
     </>);
 };

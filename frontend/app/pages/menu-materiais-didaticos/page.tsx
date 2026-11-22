@@ -28,8 +28,8 @@ export default function MenuMateriaisDidaticos(){
             try {
                 const dados = await listarMateriais();
                 setMateriais(Array.isArray(dados) ? dados : []);
-            } catch (error: any) {
-                toast.error(error.message || 'Erro ao carregar materiais didáticos.');
+            } catch (error: unknown) {
+                toast.error((error as Error).message || 'Erro ao carregar materiais didáticos.');
                 setMateriais([]);
             } finally {
                 setCarregando(false);
