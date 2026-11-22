@@ -1,0 +1,37 @@
+[
+    {
+        "username": "estefane",
+        "email": "estefane@alunos.utfpr.edu.br",
+        "full_name": "Estefane de Lima dos Santos",
+        "disabled": false,
+        "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$9LsZf2XgBIWyGpkmQxA+vQ$OKDjkbs6xNnKNi5nnBO8EbksuHDXIeU7TLDR5KBOzKg"
+    },
+    {
+        "username": "kauane",
+        "email": "kauane@alunos.utfpr.edu.br",
+        "full_name": "Kauane dos Santos Vieira",
+        "disabled": false,
+        "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$qwv1RtcTaLqqilvGV5ZIiA$DxvVaeH44+nRGPrflvndY/EmY6NO5GZhGFIASLyT790"
+    },
+    {
+        "username": "lucio",
+        "email": "lucio@utfpr.edu.br",
+        "full_name": "Lúcio Agostinho Rocha",
+        "disabled": false,
+        "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$FSgvhT06PGNFiwhtxITuLg$KgIWh3KFIZ8gJPvYqvclwbpr9WDETaO7mwDE8CPOV8E"
+    },
+    {
+        "username": "maria",
+        "email": "maria@alunos.utfpr.edu.br",
+        "full_name": "Maria Teresa",
+        "disabled": false,
+        "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$vq6xk2foGm49DLw26+R+Wg$HuYQQZ8BgjEyqnrD7sybuiGYXU/p81A0WRJbXXdckXU"
+    },
+    {
+        "username": "joaozin",
+        "email": "joao@alunos.utfpr.edu.br",
+        "full_name": "João Silva",
+        "disabled": false,
+        "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$pEfQdf6H2q7k2e0XO0v1dA$VQr4ICi4BowAHKIndGLZleOg2AdiZTK/v1wTCqnn3UE"
+    }
+]

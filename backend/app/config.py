@@ -5,7 +5,11 @@ class Configuracao(BaseSettings):
     gemini_model: str = "gemini-3.8-flash"
     cors_origins: str = "http://localhost:3000"
 
-    model_config = SettingsConfigDict(env_file=".env")
+    secret_key: str
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
+
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
     def origens_permitidas(self) -> list[str]:

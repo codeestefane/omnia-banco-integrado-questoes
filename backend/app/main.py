@@ -4,6 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import configuracao
 from app.routers import materiais
 from app.routers import questoes
+from app.routers import users
+from app.routers import cadastrar
+from app.routers import login 
 
 app = FastAPI(
     title="Omnia API",
@@ -20,6 +23,9 @@ app.add_middleware(
 
 app.include_router(materiais.router_materiais)
 app.include_router(questoes.router_questoes)
+app.include_router(cadastrar.router_cadastrar)
+app.include_router(users.router_users)
+app.include_router(login.router_login)
 
 @app.get("/")
 def status():

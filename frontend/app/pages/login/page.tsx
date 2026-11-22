@@ -4,8 +4,6 @@ import { useRouter } from 'next/navigation'
 import Button from '../../components/Button/button'
 import './index.css'
 
-import { handleUsers } from '@/app/utils/storage'
-
 import Input from '../../components/Forms/Input/input'
 
 import Navbar from '@/app/components/Navbar/navbar';
@@ -14,16 +12,16 @@ import { useState } from 'react'
 
 import { ToastContainer, toast } from 'react-toastify'
 
+import { loginUsuario, buscarUsuarioAtual } from '@/app/services/api'
+
 type Usuario = {
     nome: string;
     email: string;
     senha: string;
 }
 
-// const usuarios = usersList as Usuario[];
-
 export default function Login(){
-    const [email, setEmail] = useState('');
+    const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
     const [user, setUser] = useState < Usuario | null > (null);
@@ -33,22 +31,23 @@ export default function Login(){
     const handleLogin =  async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const usersList = handleUsers();
+        if(username && password){
+            try {
+                await loginUsuario(username, password);
+                const user = await buscarUsuarioAtual();
 
-        if(email && password){
-            const loggedUser = usersList.find(user => user.email == email && user.senha == password);
-      
-            if(loggedUser){
-                localStorage.setItem('usuarioLogado', JSON.stringify(loggedUser))
-                setUser(loggedUser);
+                if(user){
+                    localStorage.setItem("user", JSON.stringify(user));
 
-                setEmail('');
-                setPassword('');
+                    setUserName('');
+                    setPassword('');
 
-                router.push("/pages/menu-materiais-didaticos");
+                    router.push("/pages/menu-materiais-didaticos");
 
-            } else {
-                toast.error("E-mail ou senha inválidos!");
+                } 
+
+            } catch (error: any) {
+                toast.error(error.message);
             }
         } else {
             toast.warning("Preencha todos os campos!");
@@ -60,7 +59,7 @@ export default function Login(){
         <Navbar exibirItens={false}/>   
         <div className='page'>
             <form className='login' onSubmit={(e) => handleLogin(e)}>
-                <Input label="Digite seu e-mail:" type="email" name="email" onChange = {(e) => setEmail(e.target.value)} required value={email}></Input>
+                <Input label="Digite seu nome de usuário:" type="text" name="username" onChange = {(e) => setUserName(e.target.value)} required value={username}></Input>
                 <Input label="Digite sua senha:" type="password" name="password" onChange = {(e) => setPassword(e.target.value)} required value={password}></Input>
                 <Button type="submit">Login</Button>
                 <p>Não tem uma conta? <span onClick={(e) => router.push('/pages/cadastro')}>Cadastre-se!</span></p>

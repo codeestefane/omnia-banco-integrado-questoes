@@ -26,6 +26,7 @@ export default function Navbar({exibirItens} : props){
     }
 
     function handleLogout(){
+        localStorage.removeItem("access_token");
         router.replace('/pages/login');
         router.refresh();
     }
