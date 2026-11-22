@@ -14,11 +14,7 @@ import { ToastContainer, toast } from 'react-toastify'
 
 import { loginUsuario, buscarUsuarioAtual } from '@/app/services/api'
 
-type Usuario = {
-    nome: string;
-    email: string;
-    senha: string;
-}
+import { Usuario } from '@/app/types'
 
 export default function Login(){
     const [username, setUserName] = useState('');

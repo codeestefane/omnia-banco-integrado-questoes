@@ -21,7 +21,9 @@ import questoesMateriaisDidaticos from "../../../data/questoesMateriaisDidaticos
 import { buscarMaterialID } from "@/app/services/api";
 
 import '../index.css'
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+
+import { buscarUsuarioAtual } from "@/app/services/api";
 
 const questoesMateriais = questoesMateriaisDidaticos as QuestionarioIA[];
 
@@ -39,10 +41,10 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
 
     useEffect(() => {
             async function carregarMaterial() {
+
                 try {
                     const dado = await buscarMaterialID(Number(id));
                     setMaterial(dado ? dado : null);
-                    console.log(material);
                 } catch (error: any) {
                     toast.error(error.message || `Erro ao carregar material com identificador ${id}!`);
                     setMaterial(null);
@@ -129,6 +131,7 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
                 )}
 
             </div>
+            <ToastContainer position="top-center"/>
         </Suspense>
     );
 }

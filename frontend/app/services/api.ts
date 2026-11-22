@@ -1,6 +1,6 @@
 import { MaterialDidatico } from "../types";
 
-const API_URL = "https://omnia-api-2ihz.onrender.com/docs";
+const API_URL = "https://omnia-api-2ihz.onrender.com";
 
 let cacheMateriais: MaterialDidatico[] | null = null;
 
@@ -79,6 +79,7 @@ export async function listarMateriais(forcarAtualizacao = false): Promise<Materi
 
   const dados = await response.json();
   cacheMateriais = Array.isArray(dados) ? dados : [];
+
   return cacheMateriais;
 }
 

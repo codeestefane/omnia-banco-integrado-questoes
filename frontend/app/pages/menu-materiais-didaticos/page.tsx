@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 import Select from '../../components/Forms/Select/select'
 import CardMenu from '../../components/CardMenu/cardMenu'
@@ -10,7 +10,7 @@ import CardMenu from '../../components/CardMenu/cardMenu'
 import imgPadrao from '../../img/disciplinas/ciencias.png'
 import { capasDisciplinas } from '@/app/utils/capasDisciplinas'
 import { MaterialDidatico } from '@/app/types'
-import { listarMateriais } from '@/app/services/api';
+import { buscarUsuarioAtual, listarMateriais } from '@/app/services/api';
 
 export default function MenuMateriaisDidaticos(){ 
     const [materiais, setMateriais] = useState<MaterialDidatico[]>([]);
@@ -23,11 +23,11 @@ export default function MenuMateriaisDidaticos(){
     const router = useRouter();
 
     useEffect(() => {
+        
         async function carregarMateriais() {
             try {
                 const dados = await listarMateriais();
                 setMateriais(Array.isArray(dados) ? dados : []);
-                console.log(materiais);
             } catch (error: any) {
                 toast.error(error.message || 'Erro ao carregar materiais didáticos.');
                 setMateriais([]);
@@ -71,5 +71,6 @@ export default function MenuMateriaisDidaticos(){
                     ))}
             </section>)}
         </div>
+        <ToastContainer position="top-center"/>
     </>);
 };
