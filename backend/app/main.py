@@ -7,6 +7,7 @@ from app.routers import questoes
 from app.routers import users
 from app.routers import cadastrar
 from app.routers import login 
+from app.routers import provas
 
 app = FastAPI(
     title="Omnia API",
@@ -26,6 +27,7 @@ app.include_router(questoes.router_questoes)
 app.include_router(cadastrar.router_cadastrar)
 app.include_router(users.router_users)
 app.include_router(login.router_login)
+app.include_router(provas.router_provas)
 
 @app.get("/")
 def status():

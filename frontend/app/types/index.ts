@@ -46,3 +46,10 @@ export type QuestionarioIA = {
     id: number,
     questoes: NiveisQuestionarioIA
 }
+
+export type ProvaResumo = {
+    id: string;
+    banca: string;
+    ano: string;
+    area: string;
+}
