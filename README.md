@@ -206,4 +206,4 @@ Use o `access_token` devolvido pelo endpoint `/token` no header `Authorization: 
 - os materiais usados pela API ficam em [backend/app/data/materiais.json](backend/app/data/materiais.json);
 - os usuários cadastrados são armazenados em [backend/app/data/users.json](backend/app/data/users.json);
 - os dados exibidos pelo frontend estão em [frontend/app/data](frontend/app/data);
-- o projeto usa arquivos JSON como armazenamento; não há integração com banco de dados configurada neste momento.
+- o projeto usa arquivos JSON como armazenamento; não há integração com banco de dados configurada atualmente.
