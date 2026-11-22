@@ -13,10 +13,10 @@ app = FastAPI(
     description="API de apoio à educação básica com geração de questões por IA",
 )
 
-# configurações do servidor
 app.add_middleware(
     CORSMiddleware,
     allow_origins=configuracao.origens_permitidas,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
