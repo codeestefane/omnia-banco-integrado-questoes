@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://omnia-api-2ihz.onrender.com";
 
 export async function cadastrarUsuario(dados: {
   username: string;
