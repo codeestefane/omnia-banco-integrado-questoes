@@ -1,43 +1,58 @@
 'use client'
 
-import { notFound } from "next/navigation";
-import Navbar from "../../../components/Navbar/navbar"
+import { notFound, useRouter } from "next/navigation";
+import { Suspense } from "react";
+import { use, useState, useEffect} from "react";
+
 import HeaderConteudo from "@/app/components/HeaderConteudo/header";
-import materiaisDidaticos from "../../../data/materiaisDidaticos.json";
 import { MaterialDidatico } from "../../../types";
+import Select from '../../../components/Forms/Select/select'
+import Input from "@/app/components/Forms/Input/input";
+import Button from '../../../components/Button/button'
+import Questionario from "@/app/components/Questionario/questionario";
+
 import { capasDisciplinas } from "@/app/utils/capasDisciplinas";
 import imgPadrao from '../../../img/disciplinas/ciencias.png'
-import { Suspense } from "react";
-import { use, useState} from "react";
 
 import { QuestaoIA, QuestionarioIA, NiveisQuestionarioIA } from "../../../types";
 
 import questoesMateriaisDidaticos from "../../../data/questoesMateriaisDidaticos.json"
 
-import Select from '../../../components/Forms/Select/select'
-import Input from "@/app/components/Forms/Input/input";
-
-import { useRouter } from "next/navigation";
-
-import Button from '../../../components/Button/button'
-
-import Questionario from "@/app/components/Questionario/questionario";
+import { buscarMaterialID } from "@/app/services/api";
 
 import '../index.css'
-
-const materiais = materiaisDidaticos as MaterialDidatico[];
+import { toast } from "react-toastify";
 
 const questoesMateriais = questoesMateriaisDidaticos as QuestionarioIA[];
 
 export default function MaterialPage({params} : {params: Promise<{id: string}>}){
+    const [material, setMaterial] = useState<MaterialDidatico | null>();
+    const [carregando, setCarregando] = useState(true);
+
     const {id} = use(params);
-    const material = materiais.find((m) => String(m.id) === id);
     const [conteudo, setConteudo] = useState(0);
     const [nivel, setNivel] = useState('');
     const [qtdQuestoes, setQtdQuestoes] = useState('');
     const [questoes, setQuestoes] = useState<QuestaoIA[]>([])
 
     const router = useRouter();
+
+    useEffect(() => {
+            async function carregarMaterial() {
+                try {
+                    const dado = await buscarMaterialID(Number(id));
+                    setMaterial(dado ? dado : null);
+                    console.log(material);
+                } catch (error: any) {
+                    toast.error(error.message || `Erro ao carregar material com identificador ${id}!`);
+                    setMaterial(null);
+                } finally {
+                    setCarregando(false);
+                }
+            }
+    
+            carregarMaterial();
+        }, []);
 
     const handleGerarQuestoes = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -65,11 +80,12 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
         setConteudo(0);
     }
 
-    if (!material) notFound();
-
     return (
         <Suspense fallback={null}>
             <div className="painel materiais">
+                {carregando ? (<p>Material carregando...</p>) : !material ? notFound() :
+                (
+                <>
                 <HeaderConteudo imagem = {capasDisciplinas.get(material.disciplina) ?? imgPadrao} titulo={material.tema} subtitulo={`${material.disciplina} - ${material.anoEscolar}`} onFechar = {onFechar}/>
                
                 <section className="corpo">
@@ -108,6 +124,9 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
                     </>)}
                    
                 </section>
+                </>
+                
+                )}
 
             </div>
         </Suspense>

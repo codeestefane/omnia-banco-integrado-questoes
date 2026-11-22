@@ -1,4 +1,8 @@
-const API_URL = "https://omnia-api-2ihz.onrender.com";
+import { MaterialDidatico } from "../types";
+
+const API_URL = "https://omnia-api-2ihz.onrender.com/docs";
+
+let cacheMateriais: MaterialDidatico[] | null = null;
 
 export async function cadastrarUsuario(dados: {
   username: string;
@@ -55,6 +59,36 @@ export async function buscarUsuarioAtual() {
   if (response.status === 401) {
     localStorage.removeItem("access_token");
     return null;
+  }
+
+  return response.json();
+}
+
+export async function listarMateriais(forcarAtualizacao = false): Promise<MaterialDidatico[] | null> {
+  if (cacheMateriais && !forcarAtualizacao) {
+    return cacheMateriais;
+  }
+
+  const response = await fetch(`${API_URL}/materiais`, {
+    method: "GET"
+  })
+
+  if(!response.ok){
+    return null
+  }
+
+  const dados = await response.json();
+  cacheMateriais = Array.isArray(dados) ? dados : [];
+  return cacheMateriais;
+}
+
+export async function buscarMaterialID(id: number){
+  const response = await fetch(`${API_URL}/materiais/${id}`, {
+    method: "GET"
+  })
+
+  if(!response.ok){
+    return null
   }
 
   return response.json();

@@ -1,30 +1,47 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify';
 
-import Navbar from '../../components/Navbar/navbar'
 import Select from '../../components/Forms/Select/select'
 import CardMenu from '../../components/CardMenu/cardMenu'
 
 import imgPadrao from '../../img/disciplinas/ciencias.png'
 import { capasDisciplinas } from '@/app/utils/capasDisciplinas'
-import materiaisDidaticosJson from '../../data/materiaisDidaticos.json'
-
 import { MaterialDidatico } from '@/app/types'
+import { listarMateriais } from '@/app/services/api';
 
-const materiais = materiaisDidaticosJson as MaterialDidatico[];
-
-const anosEscolares = [...new Set(materiais.map((m) => m.anoEscolar))];
-const disciplinas = [...new Set(materiais.map((m) => m.disciplina))];
-const temas = [...new Set(materiais.map((m) => m.tema))];
-
-export default function MenuMateriaisDidaticos(){
-    const router = useRouter();
+export default function MenuMateriaisDidaticos(){ 
+    const [materiais, setMateriais] = useState<MaterialDidatico[]>([]);
+    const [carregando, setCarregando] = useState(true);
+    
     const [anoEscolar, setAnoEscolar] = useState('');
     const [disciplina, setDisciplina] = useState('');
     const [tema, setTema] = useState('');
+    
+    const router = useRouter();
 
+    useEffect(() => {
+        async function carregarMateriais() {
+            try {
+                const dados = await listarMateriais();
+                setMateriais(Array.isArray(dados) ? dados : []);
+                console.log(materiais);
+            } catch (error: any) {
+                toast.error(error.message || 'Erro ao carregar materiais didáticos.');
+                setMateriais([]);
+            } finally {
+                setCarregando(false);
+            }
+        }
+
+        carregarMateriais();
+    }, []);
+
+    const anosEscolares = [...new Set(materiais.map((m) => m.anoEscolar))];
+    const disciplinas = [...new Set(materiais.map((m) => m.disciplina))];
+    const temas = [...new Set(materiais.map((m) => m.tema))];
     const filtrados = materiais.filter((m) =>
         (!anoEscolar || anoEscolar === "Todos" || m.anoEscolar=== anoEscolar) && (!disciplina || disciplina === "Todos" || m.disciplina === disciplina) && (!tema || tema === "Todos" || m.tema === tema)
     )
@@ -37,8 +54,10 @@ export default function MenuMateriaisDidaticos(){
                 <Select nome="tema" conteudo="Selecione o tema" opcoes={["Todos", ...temas]} onChange = {setTema} value={tema}></Select>
             </form>
 
-            {filtrados.length === 0 ? (
-                <p className="vazio">Nenhum material encontrado para esses filtros!</p>
+            { carregando ? (
+                <p className="vazio">Carregando materiais...</p>
+            ) : filtrados.length === 0 ? (
+                <p className="vazio">Nenhum material encontrado!</p>
             ) : (
             <section className='card-conteudo'>
                  {filtrados.map((m) => (
