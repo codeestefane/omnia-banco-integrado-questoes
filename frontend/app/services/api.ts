@@ -1,9 +1,8 @@
 import { MaterialDidatico, QuestaoIA } from "../types";
 
-// const API_URL = "https://omnia-api-2ihz.onrender.com/docs";
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://omnia-api-2ihz.onrender.com").replace(/\/$/, "");
 
-let cacheMateriais: MaterialDidatico[] | null = null;
+// let cacheMateriais: MaterialDidatico[] | null = null;
 
 export class SessaoExpiradaErro extends Error {
   constructor() {
@@ -76,28 +75,50 @@ export async function buscarUsuarioAtual() {
   return response.json();
 }
 
-export async function listarMateriais(forcarAtualizacao = false): Promise<MaterialDidatico[] | null> {
-  if (cacheMateriais && !forcarAtualizacao) {
-    return cacheMateriais;
-  }
+export async function listarMateriais(): Promise<MaterialDidatico[] | null> {
+  const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${API_URL}/materiais`, {
-    method: "GET"
+  const response = await fetch(`${API_URL}/materiais/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    }
   })
+
+  if (response.status === 401) {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
+    window.location.href = "/pages/login"; 
+    throw new Error("Sessão expirada. Faça login novamente.");
+  }
 
   if(!response.ok){
     return null
   }
 
-  const dados = await response.json();
-  cacheMateriais = Array.isArray(dados) ? dados : [];
-  return cacheMateriais;
+  return await response.json();;
 }
 
 export async function buscarMaterialID(id: number){
+  const token = localStorage.getItem("access_token");
+
+  console.log(token);
+
   const response = await fetch(`${API_URL}/materiais/${id}`, {
-    method: "GET"
+    method: "GET", 
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    }
   })
+
+  if (response.status === 401) {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
+    window.location.href = "/pages/login"; 
+    throw new Error("Sessão expirada. Faça login novamente.");
+  }
 
   if(!response.ok){
     return null

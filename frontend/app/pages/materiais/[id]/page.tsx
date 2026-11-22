@@ -12,17 +12,14 @@ import Button from '../../../components/Button/button'
 import Questionario from "@/app/components/Questionario/questionario";
 
 import { capasDisciplinas } from "@/app/utils/capasDisciplinas";
-// import imgPadrao from '../../../img/disciplinas/ciencias.png';
 import imgPadrao from "@/app/img/disciplinas/ciencias.png";
-
-// import { QuestaoIA, QuestionarioIA, NiveisQuestionarioIA } from "../../../types";
-
-// import questoesMateriaisDidaticos from "../../../data/questoesMateriaisDidaticos.json"
 
 import { buscarMaterialID, gerarQuestoes, SessaoExpiradaErro } from "@/app/services/api";
 
 import '../index.css'
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+
+import { buscarUsuarioAtual } from "@/app/services/api";
 
 const NIVEIS = { facil: "Fácil", medio: "Médio", dificil: "Difícil" } as const;
 type Nivel = keyof typeof NIVEIS;
@@ -44,12 +41,16 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
 
     useEffect(() => {
             async function carregarMaterial() {
+
                 try {
                     const dado = await buscarMaterialID(Number(id));
                     setMaterial(dado ? dado : null);
                     console.log(material);
                 } catch (error: unknown) {
                     toast.error((error as Error).message || `Erro ao carregar material com identificador ${id}!`);
+                // } catch (error: any) {
+                    // toast.error(error.message || `Erro ao carregar material com identificador ${id}!`);
+// >>>>>>> 403e6efbc0d4e1428f44a98d6030bbf885b45ff3
                     setMaterial(null);
                 } finally {
                     setCarregando(false);
@@ -88,17 +89,6 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
         } finally {
             setGerando(false);
         }
-
-        // setConteudo(conteudo + 1);
-
-        // const questionario = questoesMateriais.find((q) => String(q.id) === id);
-
-        // if (!questionario) notFound();
-
-        // setQuestoes(questionario.questoes[nivel as keyof NiveisQuestionarioIA].slice(0, Number(qtdQuestoes)));
-
-        // setNivel('');
-        // setQtdQuestoes('');
     }
 
     const handleConteudo = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -115,7 +105,7 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
     return (
         <Suspense fallback={null}>
             <div className="painel materiais">
-                {carregando ? (<p>Material carregando...</p>) : !material ? notFound() :
+                {carregando ? (<p className="vazio">Material carregando...</p>) : !material ? notFound() :
                 (
                 <>
                 <HeaderConteudo imagem = {capasDisciplinas.get(material.disciplina) ?? imgPadrao} titulo={material.tema} subtitulo={`${material.disciplina} - ${material.anoEscolar}`} onFechar = {onFechar}/>
@@ -166,6 +156,7 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
                 )}
 
             </div>
+            <ToastContainer position="top-center"/>
         </Suspense>
     );
 }

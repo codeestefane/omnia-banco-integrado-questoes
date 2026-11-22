@@ -34,3 +34,7 @@ form p span:hover {
 form p span {
     margin-bottom: 30px;
 }
+
+div.page-cadastro {
+    padding-bottom: 60px;
+}

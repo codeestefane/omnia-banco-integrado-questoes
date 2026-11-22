@@ -40,5 +40,12 @@
         "full_name": "Kauane dos Santos Vieira",
         "disabled": false,
         "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$sypArsYhY0ThiU/Xi+ZrUA$c34eLyrtKaRTYlAwfMYvBB0Hjw1Lp3K+ISEcxAxhAqo"
+    },
+    {
+        "username": "vitor",
+        "email": "vitor@alunos.utfpr.edu.br",
+        "full_name": "Vitor Alexandre Flores",
+        "disabled": false,
+        "hashed_password": "$argon2id$v=19$m=65536,t=3,p=4$ScWrAiCAdRiDNoHjzI067w$mCEkgqg2MK/Rs32uG4NHJiMCETx/1RPYimPcwRIB9RY"
     }
 ]

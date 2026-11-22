@@ -8,10 +8,6 @@ import { useRouter } from 'next/navigation'
 
 import '../login/index.css'
 
-import { handleUsers } from '@/app/utils/storage'
-
-import usersList from '../../data/user.json'
-
 import { useState } from 'react'
 
 import { ToastContainer, toast } from 'react-toastify'
@@ -47,7 +43,7 @@ export default function Cadastro(){
 
     return(<>
     <Navbar exibirItens={false}/>   
-        <div className='page'>
+        <div className='page page-cadastro'>
             <form className='cadastro' onSubmit={handleCadastro}>
                 <Input label="Digite seu nome completo:" type="text" name="nome" onChange = {(e) => setNome(e.target.value)} required value={nome}></Input>
                 <Input label="Digite seu nome de usuário:" type="text" name="username" onChange = {(e) => setUserName(e.target.value)} required value={username}></Input>
