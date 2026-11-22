@@ -24,8 +24,12 @@ def _get(caminho: str, params: dict | None = None):
         resposta = httpx.get(f"{ENEM_URL}{caminho}", params=params, timeout=20)
         resposta.raise_for_status()
         return resposta.json()
-    except httpx.HTTPError as e:
-        raise EnemErro(f"Falha ao consultar a API do Enem: {e}")
+    except httpx.TimeoutException:
+        raise EnemErro("A API do ENEM demorou demais para responder. Tente novamente em instantes.")
+    except httpx.HTTPStatusError as e:
+        raise EnemErro(f"A API do ENEM respondeu com erro ({e.response.status_code}).")
+    except httpx.HTTPError:
+        raise EnemErro("Não foi possível conectar à API do ENEM.")
 
 @lru_cache(maxsize=1)
 def _exames() -> tuple[dict, ...]:
@@ -112,7 +116,7 @@ def listar_provas_enem() -> list[dict]:
 
 def buscar_prova_enem(ano: int, slug: str) -> dict:
     if slug not in AREAS or ano not in listar_anos():
-        raise ProvaNaoEncontrada()
+        raise ProvaNaoEncontrada("Esta prova não existe no ENEM.")
 
     questoes = []
     numeros_vistos = set()
@@ -125,7 +129,7 @@ def buscar_prova_enem(ano: int, slug: str) -> dict:
             questoes.append(convertida)
 
     if not questoes:
-        raise ProvaNaoEncontrada()
+        raise ProvaNaoEncontrada(f"Nenhuma questão disponível para {AREAS[slug]} ({ano}).")
 
     questoes.sort(key=lambda x: x["numero"])
     return {

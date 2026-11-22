@@ -169,7 +169,13 @@ export async function buscarProvaEnem(id: string): Promise<Prova | null> {
   if (!partes) return null;
 
   const [, ano, area] = partes;
-  const response = await fetch(`${API_URL}/provas/enem/${ano}/${area}`);
+
+  let response: Response;
+  try{
+    response = await fetch(`${API_URL}/provas/enem/${ano}/${area}`);
+  } catch {
+    throw new Error("Não foi possível conectar ao servidor. Tente novamente em instantes.");
+  }
 
   if (response.status === 404) return null;
   if (!response.ok) {

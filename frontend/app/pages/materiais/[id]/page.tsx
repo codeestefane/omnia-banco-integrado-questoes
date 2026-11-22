@@ -19,7 +19,7 @@ import { buscarMaterialID, gerarQuestoes, SessaoExpiradaErro } from "@/app/servi
 import '../index.css'
 import { toast, ToastContainer } from "react-toastify";
 
-import { buscarUsuarioAtual } from "@/app/services/api";
+// import { buscarUsuarioAtual } from "@/app/services/api";
 
 const NIVEIS = { facil: "Fácil", medio: "Médio", dificil: "Difícil" } as const;
 type Nivel = keyof typeof NIVEIS;
@@ -45,12 +45,8 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
                 try {
                     const dado = await buscarMaterialID(Number(id));
                     setMaterial(dado ? dado : null);
-                    console.log(material);
                 } catch (error: unknown) {
                     toast.error((error as Error).message || `Erro ao carregar material com identificador ${id}!`);
-                // } catch (error: any) {
-                    // toast.error(error.message || `Erro ao carregar material com identificador ${id}!`);
-// >>>>>>> 403e6efbc0d4e1428f44a98d6030bbf885b45ff3
                     setMaterial(null);
                 } finally {
                     setCarregando(false);

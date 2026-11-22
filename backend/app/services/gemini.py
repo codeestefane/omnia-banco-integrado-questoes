@@ -1,9 +1,17 @@
+import logging
+
 from google import genai
 from google.genai import types
+from google.genai import errors as genai_errors
 
 from app.config import configuracao
 from app.schemas.material import Material
 from app.schemas.questao import Dificuldade, Questao, QuestaoGerada
+
+logger = logging.getLogger(__name__)
+
+class IACotaExcedida(Exception):
+    pass
 
 class IAIndisponivel(Exception):
     pass
@@ -59,10 +67,20 @@ def gerar_questoes(material: Material, dificuldade: Dificuldade, quantidade: int
             )
         )
         print("Gemini respondeu com sucesso!")
-    except Exception as e:
-        raise IAErro(f"Falha ao chamar a IA: {e}")
+
+    except genai_errors.APIError as e:
+        logger.error("Erro da API do Gemini (código %s): %s", getattr(e, "code", "?"), e)
+        if getattr(e, "code", None) == 429:
+            raise IACotaExcedida()
+        raise IAErro("A IA está indisponível no momento. Tente novamente em instantes.")
+    except Exception:
+        logger.exception("Falha inesperada ao chamar o Gemini")
+        raise IAErro(f"Não foi possível gerar as questões agora. Tente novamente mais tarde!")
 
     questoes_geradas = resposta.parsed or []
+
+    if not questoes_geradas:
+        raise IAErro("A IA não retornou questões. Tente novamente!")
    
     return [
         Questao(
