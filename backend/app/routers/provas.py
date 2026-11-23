@@ -13,8 +13,8 @@ from app.services.login import get_current_active_user
 
 router_provas = APIRouter(
     prefix="/provas", 
-    tags=["Provas (ENEM)"],
-    dependencies=[Depends(get_current_active_user)],
+    tags=["Provas (ENEM)"]
+    # dependencies=[Depends(get_current_active_user)],
 )
 
 @router_provas.get("/enem", response_model=list[ProvaResumo])
