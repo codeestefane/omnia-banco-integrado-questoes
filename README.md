@@ -55,14 +55,17 @@ A API foi construída com FastAPI e expõe os seguintes recursos:
 | Método | Endpoint | Descrição |
 | --- | --- | --- |
 | `GET` | `/` | verifica o estado da API |
-| `GET` | `/materiais` | lista os materiais didáticos |
-| `GET` | `/materiais/{material_id}` | obtém um material pelo ID |
+| `GET` | `/materiais/` | lista os materiais didáticos para usuário autenticado |
+| `GET` | `/materiais/{material_id}` | obtém um material pelo ID para usuário autenticado |
 | `POST` | `/questoes?material_id={id}` | gera questões com IA |
 | `POST` | `/cadastrar/` | cadastra um usuário |
 | `POST` | `/token` | autentica e devolve um token JWT |
 | `GET` | `/users/me/` | retorna o usuário autenticado |
 | `GET` | `/users` | lista os usuários |
 | `GET` | `/users/{username}` | busca um usuário pelo nome |
+| `GET` | `/provas/enem` | lista provas e anos disponíveis no ENEM |
+| `GET` | `/provas/enem/{ano}/{area}` | busca uma prova ENEM |
+| `GET` | `/provas/enem/simulado?area={area}&quantidade={n}` | gera um simulado com até 10 questões |
 
 Arquivos principais:
 
@@ -74,7 +77,7 @@ Arquivos principais:
 
 ### Frontend
 
-A interface foi construída com Next.js, React e TypeScript. Os materiais didáticos são carregados pela API, enquanto provas e simulados usam dados locais em [frontend/app/data](frontend/app/data).
+A interface foi construída com Next.js, React e TypeScript. Materiais didáticos e provas ENEM são carregados pela API.
 
 Páginas principais:
 
@@ -156,13 +159,19 @@ npm run dev
 
 A aplicação ficará disponível em `http://localhost:3000`.
 
-Por padrão, [frontend/app/services/api.ts](frontend/app/services/api.ts) aponta para a API publicada no Render:
+Por padrão, [frontend/app/services/api.ts](frontend/app/services/api.ts) usa a variável `NEXT_PUBLIC_API_URL`. Crie um arquivo `frontend/.env.local`:
 
-```typescript
-const API_URL = "https://omnia-api-2ihz.onrender.com";
+```env
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
 ```
 
-Para usar uma API local, substitua esse valor por `http://127.0.0.1:8000`. Quando houver deploy do frontend em outro endereço, inclua esse endereço em `CORS_ORIGINS` no backend.
+Para usar a API publicada, defina:
+
+```env
+NEXT_PUBLIC_API_URL=https://omnia-api-2ihz.onrender.com
+```
+
+Se a variável não estiver definida, o frontend usa `http://127.0.0.1:8000`. Quando houver deploy do frontend em outro endereço, inclua esse endereço em `CORS_ORIGINS` no backend.
 
 ## Exemplos de uso
 
@@ -174,8 +183,11 @@ curl http://localhost:8000/
 
 ### Listar materiais
 
+Os materiais exigem autenticação. Use o token obtido em `/token`:
+
 ```powershell
-curl http://localhost:8000/materiais
+curl http://localhost:8000/materiais/ `
+  -H "Authorization: Bearer seu_token_aqui"
 ```
 
 ### Gerar questões
@@ -218,5 +230,4 @@ Use o `access_token` devolvido pelo endpoint `/token` no header `Authorization: 
 - sem essa chave, o endpoint `/questoes` retorna erro HTTP 503;
 - os materiais usados pela API ficam em [backend/app/data/materiais.json](backend/app/data/materiais.json);
 - os usuários cadastrados são armazenados em [backend/app/data/users.json](backend/app/data/users.json);
-- os dados exibidos pelo frontend estão em [frontend/app/data](frontend/app/data);
-- o projeto usa arquivos JSON como armazenamento; não há integração com banco de dados configurada atualmente.
+- o projeto usa arquivos JSON como armazenamento; não há integração com banco de dados configurada neste momento.
