@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 
 from app.schemas.prova import Prova, ProvaResumo
 from app.services.enem import (
@@ -9,7 +9,14 @@ from app.services.enem import (
     listar_provas_enem,
 )
 
-router_provas = APIRouter(prefix="/provas", tags=["Provas (ENEM)"])
+from app.schemas.user import UserInDB
+from app.services.login import get_current_active_user
+
+router_provas = APIRouter(
+    prefix="/provas", 
+    tags=["Provas (ENEM)"],
+    dependencies=[Depends(get_current_active_user)],
+)
 
 @router_provas.get("/enem", response_model=list[ProvaResumo])
 def listar():
