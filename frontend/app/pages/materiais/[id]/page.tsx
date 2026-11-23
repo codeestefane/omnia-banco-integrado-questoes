@@ -19,12 +19,8 @@ import { buscarMaterialID, gerarQuestoes, SessaoExpiradaErro } from "@/app/servi
 import '../index.css'
 import { toast, ToastContainer } from "react-toastify";
 
-// import { buscarUsuarioAtual } from "@/app/services/api";
-
 const NIVEIS = { facil: "Fácil", medio: "Médio", dificil: "Difícil" } as const;
 type Nivel = keyof typeof NIVEIS;
-
-// const questoesMateriais = questoesMateriaisDidaticos as QuestionarioIA[];
 
 export default function MaterialPage({params} : {params: Promise<{id: string}>}){
     const [material, setMaterial] = useState<MaterialDidatico | null>();
@@ -98,60 +94,67 @@ export default function MaterialPage({params} : {params: Promise<{id: string}>})
         setConteudo(0);
     }
 
+    if (carregando) {
+
+        return(
+        <div className="page">
+            <p className="vazio">Material carregando...</p>
+        </div>
+        )
+        
+    }
+
+    if (!material) {
+        notFound();
+    }
+
     return (
         <Suspense fallback={null}>
             <div className="painel materiais">
-                {carregando ? (<p className="vazio">Material carregando...</p>) : !material ? notFound() :
-                (
-                <>
-                <HeaderConteudo imagem = {capasDisciplinas.get(material.disciplina) ?? imgPadrao} titulo={material.tema} subtitulo={`${material.disciplina} - ${material.anoEscolar}`} onFechar = {onFechar}/>
-               
-                <section className="corpo">
-                    {conteudo == 0 && (
-                        <>
-                            <p>{material.conteudo}</p>
-        
-                            <div className="video">
-                                <h2>Material complementar:</h2>
-                                <iframe
-                                    width="100%"
-                                    height="400"
-                                    src={material.videoUrl.replace('watch?v=', 'embed/')}
-                                    title={material.tema}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                />
-                            </div>
-        
-                            <Button type="submit" onClick = {(e) => handleConteudo(e)}>Testar aprendizado</Button>
-                        </>
-
-                    )}
-
-                    {conteudo == 1 && (<>
-                        <form onSubmit={(e) => handleGerarQuestoes(e)}>
-                            <Select nome="nivel" conteudo="Selecione nível de dificuldade" opcoes={['facil', 'medio', 'dificil']} onChange={setNivel} value={nivel}></Select>
-                            <Input type="number" min="1" max="3" label="Selecione a quantidade de questões:" onChange = {(e) => setQtdQuestoes(e.target.value)} value={qtdQuestoes} placeholder='Digite...'></Input>
-                            <Button type="submit" disabled={gerando}>
-                                {gerando ? 'Gerando questões...' : 'Gerar questões'}
-                            </Button>
-                            {gerando && (
-                                <p><b>A IA está gerando suas questões, isso pode levar alguns segundos...</b></p>
-                            )}
-                        </form>
-                    </>)}
-
-                    {conteudo == 2 && (<>
-                        <Questionario questoes={questoes} onFechar={() => setConteudo(0)}></Questionario>
-                    </>)}
-                   
-                </section>
-                </>
+                    <HeaderConteudo imagem = {capasDisciplinas.get(material.disciplina) ?? imgPadrao} titulo={material.tema} subtitulo={`${material.disciplina} - ${material.anoEscolar}`} onFechar = {onFechar}/>
                 
-                )}
+                    <section className="corpo">
+                        {conteudo == 0 && (
+                            <>
+                                <p>{material.conteudo}</p>
+            
+                                <div className="video">
+                                    <h2>Material complementar:</h2>
+                                    <iframe
+                                        width="100%"
+                                        height="400"
+                                        src={material.videoUrl.replace('watch?v=', 'embed/')}
+                                        title={material.tema}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                </div>
+            
+                                <Button type="submit" onClick = {(e) => handleConteudo(e)}>Testar aprendizado</Button>
+                            </>
 
-            </div>
+                        )}
+
+                        {conteudo == 1 && (<>
+                            <form onSubmit={(e) => handleGerarQuestoes(e)}>
+                                <Select nome="nivel" conteudo="Selecione nível de dificuldade" opcoes={['facil', 'medio', 'dificil']} onChange={setNivel} value={nivel}></Select>
+                                <Input type="number" min="1" max="3" label="Selecione a quantidade de questões:" onChange = {(e) => setQtdQuestoes(e.target.value)} value={qtdQuestoes} placeholder='Digite...'></Input>
+                                <Button type="submit" disabled={gerando}>
+                                    {gerando ? 'Gerando questões...' : 'Gerar questões'}
+                                </Button>
+                                {gerando && (
+                                    <p><b>A IA está gerando suas questões, isso pode levar alguns segundos...</b></p>
+                                )}
+                            </form>
+                        </>)}
+
+                        {conteudo == 2 && (<>
+                            <Questionario questoes={questoes} onFechar={() => setConteudo(0)}></Questionario>
+                        </>)}
+            
+                    </section>
+                </div>
             <ToastContainer position="top-center"/>
         </Suspense>
     );

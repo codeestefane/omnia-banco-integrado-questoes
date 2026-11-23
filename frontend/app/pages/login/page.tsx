@@ -20,12 +20,14 @@ export default function Login(){
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const [user, setUser] = useState < Usuario | null > (null);
+    const [carregando, setCarregando] = useState(false);
 
     const router = useRouter()
 
     const handleLogin =  async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        setCarregando(true);
 
         if(username && password){
             try {
@@ -44,6 +46,8 @@ export default function Login(){
 
             } catch (error: any) {
                 toast.error(error.message);
+            } finally {
+                setCarregando(false);
             }
         } else {
             toast.warning("Preencha todos os campos!");
@@ -57,6 +61,7 @@ export default function Login(){
             <form className='login' onSubmit={(e) => handleLogin(e)}>
                 <Input label="Digite seu nome de usuário:" type="text" name="username" onChange = {(e) => setUserName(e.target.value)} required value={username}></Input>
                 <Input label="Digite sua senha:" type="password" name="password" onChange = {(e) => setPassword(e.target.value)} required value={password}></Input>
+                {carregando ? <p className="carregando"><b>Autenticando...</b></p> : null}
                 <Button type="submit">Login</Button>
                 <p>Não tem uma conta? <span onClick={(e) => router.push('/pages/cadastro')}>Cadastre-se!</span></p>
             </form>
