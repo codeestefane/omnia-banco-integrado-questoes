@@ -47,6 +47,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         detail="Credenciais não podem ser validadas!",
         headers={"WWW-Authenticate": "Bearer"},
     )
+
     try:
         payload = jwt.decode(token, configuracao.secret_key, algorithms=[configuracao.algorithm])
         username: str | None = payload.get("sub")
@@ -59,6 +60,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user = buscar_user_username(token_data.username)
     if user is None:
         raise credentials_exception
+    
     return user
 
 async def get_current_active_user(
