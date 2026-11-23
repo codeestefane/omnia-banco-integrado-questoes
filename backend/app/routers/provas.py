@@ -9,7 +9,6 @@ from app.services.enem import (
     listar_provas_enem,
 )
 
-from app.schemas.user import UserInDB
 from app.services.login import get_current_active_user
 
 router_provas = APIRouter(

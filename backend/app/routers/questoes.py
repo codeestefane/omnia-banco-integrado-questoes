@@ -8,10 +8,13 @@ from app.services.gemini import IAErro, IAIndisponivel, IACotaExcedida, Quantida
 from app.schemas.user import UserInDB
 from app.services.login import get_current_active_user
 
-router_questoes = APIRouter(tags=["Questões (IA)"])
+router_questoes = APIRouter(
+    tags=["Questões (IA)"],
+    dependencies=[Depends(get_current_active_user)]
+)
 
 @router_questoes.post("/questoes", response_model=list[Questao])
-def gerar(material_id: int, dados: GerarQuestoesRequest, user: Annotated[UserInDB, Depends(get_current_active_user)]):
+def gerar(material_id: int, dados: GerarQuestoesRequest):
     material = buscar_material(material_id)
     if material is None:
         raise HTTPException(status_code=404, detail="Material não encontrado!")
